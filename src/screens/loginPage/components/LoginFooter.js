@@ -2,7 +2,7 @@ import React from 'react';
 function LoginFooter() {
   return (
     <div>
-      Login Footer
+      {/* Login Footer */}
     </div>
   );
 }

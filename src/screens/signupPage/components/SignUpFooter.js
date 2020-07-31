@@ -2,7 +2,10 @@ import React from 'react';
 
 function SignUpFooter() {
   return (
-    <div> Sign-Up Footer </div>
+    <div> 
+        {/* Sign-Up Footer  */}
+
+    </div>
   );
 }
 

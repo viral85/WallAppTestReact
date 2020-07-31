@@ -3,7 +3,7 @@ import React from 'react';
 function SignUpHeader() {
   return (
     <div>
-      Sign-Up Header
+      {/* Sign-Up Header */}
     </div>
   );
 }
