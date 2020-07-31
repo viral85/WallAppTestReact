@@ -12,6 +12,7 @@ import {
 const initialState = {
   isAuthenticating: false,
   user: null,
+  token: null,
 
   signUpError: false,
   signInError: true,

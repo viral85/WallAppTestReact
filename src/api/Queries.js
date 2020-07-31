@@ -1,4 +1,5 @@
-import {config} from '../config'
+import {config} from '../config';
+import { getTokenFromLocalStorage, getUserFromLocalStorage, clearLocalStorage } from '../utils/localStorage';
 
 const baseUrl = config.apiBaseUrl;
 
@@ -47,7 +48,7 @@ export async function signUpQuery(data) {
 
 // Log in for existing user
 export async function signInQuery(data) {
-  const response = await fetch(`${baseUrl}/api/v1/auth/signin`, {
+  const response = await fetch(`${baseUrl}/api/token/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -55,4 +56,38 @@ export async function signInQuery(data) {
     body: JSON.stringify(data)
   });
   return await response.json();
+}
+
+// get existing user detail
+export async function getCurrentUser({ id, token }) {
+  const response = await fetch(`${baseUrl}/api/users/details/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  });
+  return await response.json();
+}
+
+
+export async function isUserLoggedIn({ id, token }) {
+  if (!token) {
+    return false;
+  }
+
+  let user;
+
+  try {
+    user = await getCurrentUser({ id, token });
+  } catch (err) {
+    console.log(err);
+    clearLocalStorage()
+    return false;
+  }
+  if (!user) {
+    clearLocalStorage()
+    return false;
+  }
+  return user.data;
 }

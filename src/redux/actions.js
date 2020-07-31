@@ -74,14 +74,14 @@ export function signInUser(email, password, cb){
   return (dispatch) => {
     dispatch(logIn());
     signInQuery({
-      "email": email,
+      "username": email,
       "password": password
-    }).then(data =>{
-      if(data.status === 'success'){
+    }).then(data => {
+      if(data && data.access || data.refresh){
         dispatch(logInSuccess(data.data));
         localStorage.setItem("user_session", JSON.stringify(data.data));
         cb();
-      }else{
+      } else {
         dispatch(logInFailure(data.error));
       }
     })

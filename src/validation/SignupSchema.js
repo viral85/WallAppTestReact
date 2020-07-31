@@ -1,16 +1,20 @@
 import * as Yup from 'yup';
 
 export const SignupSchema = Yup.object().shape({
-  fullName: Yup.string()
-    .required('Required')
+  firstName: Yup.string()
+    .required('Firstname is required')
+    .max(60),
+  lastName: Yup.string()
+    .required('Lastname is required')
     .max(60),
   email: Yup.string()
     .email('Invalid email')
-    .required('Required'),
+    .required('Email is required'),
   password: Yup.string()
     .min(6, 'Too short. Must be minimum of 6 characters')
-    .required('Required'),
-  repeatPassword: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'Passwords do not match')
-    .required('Required'),
+    .required('Password is required'),
+  phoneNumber: Yup.string()
+    .max(13, 'Phone number is too long')
+    .matches(/^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/, 'Invalid number')
+    .required('Phone number is required'),
 });

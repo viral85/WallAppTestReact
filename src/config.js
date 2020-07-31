@@ -1,5 +1,5 @@
 
 export const config = {
-    apiBaseUrl: ""
+    apiBaseUrl: "https://30b6feb748f7.ngrok.io"
 }
   

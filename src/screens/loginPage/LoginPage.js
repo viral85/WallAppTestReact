@@ -1,8 +1,7 @@
 import React, {useEffect} from 'react';
 import LoginForm from './components/LoginForm'
 import ForgotPassword from './components/ForgotPassword'
-import LoginHeader from './components/LoginHeader'
-import LoginFooter from './components/LoginFooter'
+
 import {
   Switch,
   Route,
@@ -26,7 +25,6 @@ function LoginPage() {
 
   return (
     <div>
-      <LoginHeader />
       <Switch>
         <Route exact path={path}>
           <LoginForm />
@@ -35,7 +33,6 @@ function LoginPage() {
           <ForgotPassword title="Forgot Password?" action="Submit" />
         </Route>
       </Switch>
-      <LoginFooter />
     </div>
   );
 }

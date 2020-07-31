@@ -1,47 +1,39 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext, useLayoutEffect } from 'react'
 import LandingPage from './screens/landingPage/LandingPage'
 import LoginPage from './screens/loginPage/LoginPage'
 import SignUpPage from './screens/signupPage/SignUpPage'
-import UserRoutes from './protectedScreens/userRoutes/UserRoutes'
-import { setUser } from './redux/actions'
-import { useDispatch, useSelector } from 'react-redux'
+// import UserRoutes from './protectedScreens/userRoutes/UserRoutes'
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
   Redirect
-} from 'react-router-dom'
+} from 'react-router-dom';
+
+import { UserContext } from "./contexts/UserContext";
+import { isUserLoggedIn } from './api/Queries';
+import ProtectedRoute from './ProtectedRoute';
+import { getTokenFromLocalStorage, getUserFromLocalStorage } from './utils/localStorage';
 
 function AppRouter() {
-  const user = useSelector((state) => state.auth.user)
-  const userSession = JSON.parse(localStorage.getItem('user_session'))
-  const dispatch = useDispatch()
-
+  const userState = useContext(UserContext);
   useEffect(() => {
-    dispatch(setUser(userSession))
-  }, [])
+    const token = getTokenFromLocalStorage();
+    const loggedUser = getUserFromLocalStorage();
 
-  function PrivateRoute({ children, ...rest }) {
-    return (
-      <Route
-        {...rest}
-        render={({ location }) =>
-          user ? (
-            children
-          ) : (
-            <Redirect
-              to={{
-                pathname: '/Login',
-                state: { from: location }
-              }}
-            />
-          )
-        }
-      />
-    )
-  }
+    async function authenticate() {
+      const user = await isUserLoggedIn({ id: loggedUser && loggedUser.id, token });
+      if (!user) {
+        userState.logout();
+      } else {
+        userState.login({ ...user, token: token });
+      }
+    }
+
+    authenticate();
+  }, [userState.isLoggedIn]);
+
   return (
-    <Router>
+    <>
       <Switch>
         <Route path="/Login">
           <LoginPage />
@@ -49,14 +41,9 @@ function AppRouter() {
         <Route path="/Signup">
           <SignUpPage />
         </Route>
-        <PrivateRoute path="/User">
-          <UserRoutes />
-        </PrivateRoute>
-        <Route path="/">
-          <LandingPage />
-        </Route>
+        <ProtectedRoute exact path="/User/Dashboard" component={LandingPage} />
       </Switch>
-    </Router>
+    </>
   )
 }
 

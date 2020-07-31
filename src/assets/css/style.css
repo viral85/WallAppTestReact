@@ -117,6 +117,10 @@ textarea:focus{
    outline: 0;
 }
 
+.has-error {
+    color: red;
+    font-size: small;
+}
 
 
 /* Common CSS End */
