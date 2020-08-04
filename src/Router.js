@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import LandingPage from './screens/landingPage/LandingPage'
 import LoginPage from './screens/loginPage/LoginPage'
 import SignUpPage from './screens/signupPage/SignUpPage'
+import ResetPasswordPage from './screens/resetPassword/ResetPasswordPage'
 import UserRoutes from './protectedScreens/userRoutes/UserRoutes'
 import { setUser } from './redux/actions'
 import { useDispatch, useSelector } from 'react-redux'
@@ -48,6 +49,9 @@ function AppRouter() {
         </Route>
         <Route path="/Signup">
           <SignUpPage />
+        </Route>
+        <Route path="/ResetPassword">
+            <ResetPasswordPage />
         </Route>
         <PrivateRoute path="/User">
           <UserRoutes />
