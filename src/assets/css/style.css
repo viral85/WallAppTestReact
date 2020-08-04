@@ -73,7 +73,7 @@ a {
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
-a:hover{
+a:hover {
     text-decoration: none;
 }
 .clear {
@@ -113,8 +113,8 @@ ul li {
     box-shadow: none;
 }
 
-textarea:focus{
-   outline: 0;
+textarea:focus {
+    outline: 0;
 }
 
 .has-error {
@@ -122,10 +122,9 @@ textarea:focus{
     font-size: small;
 }
 
-
 /* Common CSS End */
 .main-wrapper {
-    margin-top: 98px;
+    margin-top: 50px;
 }
 
 .login-form {
@@ -169,11 +168,11 @@ textarea:focus{
     box-shadow: 1px 1px 5px #bfbfbf;
     background-color: #fff;
     border-radius: 5px;
-    
 }
 
-.user-section{
+.user-section {
     padding: 15px;
+    position: relative;
 }
 
 .user-avatar {
@@ -192,25 +191,34 @@ textarea:focus{
     border-radius: 4px;
 }
 
-.username{
+.username {
     display: inline-block;
     margin-top: 10px;
 }
 
-.username p{
-    margin:0;
+.username p {
+    margin: 0;
     font-weight: 600;
     text-transform: capitalize;
 }
-
+.post-area-wrapper {
+    background-color: #fff;
+    margin-bottom: 25px;
+    -webkit-box-shadow: 1px 1px 5px #bfbfbf;
+    -moz-box-shadow: 1px 1px 5px #bfbfbf;
+    -o-box-shadow: 1px 1px 5px #bfbfbf;
+    -ms-box-shadow: 1px 1px 5px #bfbfbf;
+    box-shadow: 1px 1px 5px #bfbfbf;
+    border-radius: 5px;
+}
 .post-content-wrapper {
     display: block;
     width: 100%;
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
-.post-content{
-    border:0;
+.post-content {
+    border: 0;
     resize: none;
     width: 100%;
 }
@@ -220,8 +228,8 @@ textarea:focus{
     border-top: 1px solid #ebebeb;
 }
 
-.btn-post{
-    padding: .375rem 1.25rem;    
+.btn-post {
+    padding: 0.375rem 1.25rem;
 }
 
 .post-btn-wrapper ul {
@@ -242,20 +250,23 @@ textarea:focus{
     cursor: pointer;
 }
 .post-btn-wrapper ul li .icon-like-active,
-.post-btn-wrapper ul li .icon-comment-active{
+.post-btn-wrapper ul li .icon-comment-active,
+.post-btn-wrapper ul li.active .icon-like,
+.post-btn-wrapper ul li.active .icon-comment {
     display: none;
 }
 .post-btn-wrapper ul li.active .icon-like-active,
-.post-btn-wrapper ul li.active .icon-comment-active{
+.post-btn-wrapper ul li.active .icon-comment-active {
     display: block;
 }
-.post-btn-wrapper ul li.active{
+
+.post-btn-wrapper ul li.active {
     background-color: #f4f4f4;
 }
-.post-btn-wrapper ul li.active a{
-    color:#005cbf;
+.post-btn-wrapper ul li.active a {
+    color: #005cbf;
 }
-.post-btn-wrapper ul li.active a img{
+.post-btn-wrapper ul li.active a img {
     filter: invert(19%) sepia(98%) saturate(2688%) hue-rotate(200deg) brightness(89%) contrast(101%);
 }
 .post-btn-wrapper ul li:hover {
@@ -265,7 +276,7 @@ textarea:focus{
 .post-btn-wrapper ul li a {
     display: flex;
     flex-wrap: wrap;
-    color:#000;
+    color: #000;
 }
 .post-btn-wrapper ul li a img {
     max-width: 20px;
@@ -274,13 +285,66 @@ textarea:focus{
 }
 
 .post-btn-wrapper ul li a.icon-comment img {
-    margin-bottom: -5px;
+    position: relative;
+    top: 2px;
+}
+.post-btn-wrapper ul li.active a.icon-comment-active img {
+    position: relative;
+    top: 5px;
 }
 
-.post-area-wrapper .post-btn-wrapper{
+.post-area-wrapper .post-btn-wrapper {
     padding: 5px 15px;
 }
+.like-comment-wrapper {
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    left: 0;
+    padding: 0 15px;
+}
+.like-comment-wrapper ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0;
+}
+.like-comment-wrapper ul li {
+    display: flex;
+    flex-wrap: wrap;
+}
+.like-comment-wrapper ul li a {
+    color: #000;
+    margin: 0;
+    display: flex;
+    font-size: 13px;
+}
+.like-comment-wrapper ul li a:hover {
+    color: #005cbf;
+}
+.like-comment-wrapper ul li a img {
+    max-width: 15px;
+    margin-right: 5px;
+    filter: invert(19%) sepia(98%) saturate(2688%) hue-rotate(200deg) brightness(89%) contrast(101%);
+}
 
+.Comment-section {
+    /* padding: 15px; */
+    border-top: 1px solid #eee;
+}
+
+.comment-block{
+    padding:15px;
+}
+
+.comment-block .comment{
+    resize: none;
+    border:0;
+}
+
+
+
+/* responsive */
 
 @media (min-width: 768px) {
     .main-wrapper {

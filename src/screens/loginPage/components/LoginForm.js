@@ -154,7 +154,7 @@ function LoginForm(props) {
 									{errorMessage && <div style={{ marginTop: 10 }} className="alert alert-danger alert-dismissible fade show" role="alert">{errorMessage}</div>}
 									<div className="sign-up">
 											Don't have an account? <Link to="/Signup">Sign up</Link>
-											<Link to="/ForgotPassword" className="float-right">Forgot password?</Link>
+											<Link to="/Forgot-password" className="float-right">Forgot password?</Link>
 									</div>
 								</div>
 						</div>

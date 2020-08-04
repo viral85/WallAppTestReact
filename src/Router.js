@@ -2,7 +2,9 @@ import React, { useEffect, useContext, useLayoutEffect } from 'react'
 import LandingPage from './screens/landingPage/LandingPage'
 import LoginPage from './screens/loginPage/LoginPage'
 import SignUpPage from './screens/signupPage/SignUpPage'
-// import UserRoutes from './protectedScreens/userRoutes/UserRoutes'
+import ResetPasswordPage from './screens/resetPassword/ResetPasswordPage';
+import ForgotPassword from './screens/loginPage/components/ForgotPassword';
+
 import {
   Switch,
   Route,
@@ -38,8 +40,14 @@ function AppRouter() {
         <Route path="/Login">
           <LoginPage />
         </Route>
+        <Route path="/Forgot-password">
+          <ForgotPassword />
+        </Route>
         <Route path="/Signup">
           <SignUpPage />
+        </Route>
+        <Route path="/Reset-password">
+          <ResetPasswordPage />
         </Route>
         <ProtectedRoute exact path="/User/Dashboard" component={LandingPage} />
       </Switch>
