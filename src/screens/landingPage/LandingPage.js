@@ -9,6 +9,15 @@ import './LandingPage.css';
 function LandingPage() {
     return (
         <div className="wall-wrapper">
+            <div className="user-profile shadow">
+                <div className="user-avatar">
+                    <span>RP</span>
+                </div>
+                <div className="username">
+                    <p>Username</p>
+                    <button type="button" className="btn-logout btn btn-primary">logout</button>
+                </div>
+            </div>
             <div className="main-wrapper container">
                 <div className="row">
                     <div className="col-lg-7 left-section">
@@ -16,7 +25,8 @@ function LandingPage() {
                             <div className="post-area-wrapper">
                                 <div className="user-section">
                                     <div className="user-avatar">
-                                        <img src={user_placeholder} alt="" />
+                                        {/* <img src={user_placeholder} alt="" /> */}
+                                        <span>RP</span>
                                     </div>
                                     <div className="username">
                                         <p>Username</p>
@@ -59,7 +69,8 @@ function LandingPage() {
                             <div className="post-area-wrapper">
                                 <div className="user-section">
                                     <div className="user-avatar">
-                                        <img src={user_placeholder} alt="" />
+                                        {/* <img src={user_placeholder} alt="" /> */}
+                                        <span>RP</span>
                                     </div>
                                     <div className="username">
                                         <p>Username</p>
@@ -94,7 +105,8 @@ function LandingPage() {
                             <div className="post-area-wrapper">
                                 <div className="user-section">
                                     <div className="user-avatar">
-                                        <img src={user_placeholder} alt="" />
+                                        {/* <img src={user_placeholder} alt="" /> */}
+                                        <span>RP</span>
                                     </div>
                                     <div className="username">
                                         <p>Username</p>
@@ -133,7 +145,8 @@ function LandingPage() {
                         <div className="wall-right-wrapper">
                             <div className="user-section">
                                 <div className="user-avatar">
-                                    <img src={user_placeholder} alt="" />
+                                    {/* <img src={user_placeholder} alt="" /> */}
+                                    <span>RP</span>
                                 </div>
                                 <div className="username">
                                     <p>Username</p>
