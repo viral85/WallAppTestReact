@@ -1,13 +1,50 @@
 import React, {useState, useEffect} from 'react';
 import { Formik } from 'formik';
+import { Dots } from 'react-activity';
 
 import {
     withRouter,
     useHistory,
 } from "react-router-dom";
 
+import { ForgotPasswordSchema } from '../../../validation/ForgotPasswordSchema';
+import { forgotPasswordQuery } from '../../../api/Queries';
+
 function ForgotPassword(props) {
-  
+	let history = useHistory();
+
+  const [errorMessage, setErrorMessage] = React.useState("");
+	const [isLoading, setIsLoading] = React.useState(false);
+
+	useEffect(() => {
+		if (errorMessage) {
+				setTimeout(() => {
+							setErrorMessage("");
+					}, 2000)
+			}
+	}, [errorMessage])
+
+	const forgotPasswordHandler = async (creds, resetForm) => {
+		setIsLoading(true);
+		try {
+				const data = await forgotPasswordQuery(creds);
+				if (data && data.data && (Object.keys(data.data).length > 0 || data.status === 1)) {
+						history.push('/Login');
+				}
+
+				if (data && data.message && (Object.keys(data.data).length === 0 || data.status === 0)) {
+						setErrorMessage('The fields may not be a blank');
+						resetForm();
+				}
+				setIsLoading(false);
+		} catch (e) {
+				console.log(e);
+				setIsLoading(false);
+				resetForm();
+				setErrorMessage('a network error occured');
+		}
+	};
+		
   return (
       <div className="common-page-wrapper">
           <div className="login-form shadow">
@@ -16,26 +53,54 @@ function ForgotPassword(props) {
                       <h2>Forgot Password</h2>
                   </div>
                   <div className="card-text">
-                      {/* <div className="alert alert-danger alert-dismissible fade show" role="alert">Incorrect username or password.</div>  */}
-                      <form>
-                          {/* to error: add className "has-danger"  */}
-                          <div className="form-group">
-                              <label>Email</label>
-                              <input type="email" placeholder="Enter email address" className="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp" />
-                          </div>
-                          <button type="submit" className="btn btn-primary btn-block">Send password reset email</button>
-                      </form>
-                  </div>
+                    <Formik
+                        initialValues={{
+													email: ""
+                        }}
+                        validationSchema={ForgotPasswordSchema}
+                        onSubmit={(values, { resetForm }) => {
+													forgotPasswordHandler(values, resetForm);
+                        }}
+                    >
+                        {({
+														values,
+														errors,
+														touched,
+														handleChange,
+														handleBlur,
+														handleSubmit,
+														isSubmitting,
+												}) => (
+													<form onSubmit={handleSubmit}>
+														<div className={`form-group ${errors.email && touched.email ? 'has-danger' : ''}`}>
+																<label htmlFor="inputEmailAddress">Email address</label>
+																<input
+																		type="text"
+																		name="email"
+																		placeholder="Email address"
+																		onChange={handleChange}
+																		onBlur={handleBlur}
+																		value={values.email}
+																		id="inputEmailAddress"
+																		aria-describedby="emailHelp"
+																		className="form-control form-control-sm" />
+																<div className="has-error">{errors.email && touched.email && errors.email}</div>
+														</div>
+														<button type="submit" style={{ alignItems: "center", display: "flex" }} disabled={isSubmitting} className="form-control form-control-sm">
+															<span style={{marginRight:'20px'}}>Send password reset email</span>
+															<Dots
+																color={'#000'}
+																animating={isSubmitting}
+															/>
+														</button>
+													</form>
+												)}
+                    </Formik>
+										{errorMessage && <div style={{ marginTop: 10 }} className="alert alert-danger alert-dismissible fade show" role="alert">{errorMessage}</div>}                  </div>
               </div>
           </div>
       </div>
   );
-}
-
-const mapStateToProps = (state) => {
-  return {
-    auth: state.auth
-  }
 }
 
 export default withRouter(ForgotPassword);

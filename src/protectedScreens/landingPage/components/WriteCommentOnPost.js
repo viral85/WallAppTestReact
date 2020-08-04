@@ -23,10 +23,7 @@ function WriteCommentOnPost(props) {
     }
   }, [errorMessage]);
 
-  console.log('commentscommentscomments', props.comments);
-
   const addCreateCommentOnPost = async (values, resetForm) => {
-    console.log('valuesvaluesvaluesvalues', values);
 		try {
 			const data = await addCommentOnPost({data: values, token: userState?.token || getTokenFromLocalStorage()});
 			if(data && data.status === 1){

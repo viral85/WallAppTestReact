@@ -1,11 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import moment from 'moment';
-
 import comment from '../../../assets/images/comment.svg';
 import comment_active from '../../../assets/images/comment-active.svg';
-
-import { createNewPost } from '../../../api/Queries';
-import { UserContext } from "../../../contexts/UserContext";
 
 import '../LandingPage.css';
 import WriteCommentOnPost from './WriteCommentOnPost';

@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext }  from 'react';
-import WritePost from './components/WritePost';
 import DisplayPost from './components/DisplayPost';
 
 import './LandingPage.css';
@@ -7,9 +6,15 @@ import LoadingOrError from '../../sharedComponents/LoadingOrError';
 import { UserContext } from '../../contexts/UserContext';
 
 import { getAllLatestWallPosts } from '../../api/Queries';
-import { getTokenFromLocalStorage, clearLocalStorage } from '../../utils/localStorage';
+
+import {
+  withRouter,
+  useHistory,
+  Link
+} from "react-router-dom";
 
 function LandingPage() {
+  let history = useHistory();
   const userState = useContext(UserContext);
 
   const [fetching, setFetching] = useState(false);
@@ -24,7 +29,9 @@ function LandingPage() {
     setFetchingErr(false);
     setFetchingErrMsg('');
 
-    getAllLatestWallPosts().then((response) => {
+    getAllLatestWallPosts({
+      token: null
+    }).then((response) => {
       if(response.status === 1){
         setWallPostsData(response.data);
         setFetching(false);
@@ -57,30 +64,11 @@ function LandingPage() {
     }
   }, [updated]);
 
-  const getInitials = (string) => {
-    var names = string.split(' '),
-        initials = names[0].substring(0, 1).toUpperCase();
-    
-    if (names.length > 1) {
-        initials += names[names.length - 1].substring(0, 1).toUpperCase();
-    }
-    return initials;
-  };
-
-  const logoutUser = async () => {
-    userState.logout();
-    clearLocalStorage();
-  };
-
   return (
     <div className="wall-wrapper">
       <div className="user-profile shadow">
-        <div className="user-avatar">
-          <span>{userState?.first_name && userState?.last_name ? getInitials(`${userState?.first_name} ${userState?.last_name}`) : ''}</span>
-        </div>
         <div className="username">
-            <p>{userState?.first_name && userState?.last_name ? `${userState?.first_name} ${userState?.last_name}` : ''}</p>
-            <button type="button" className="btn-logout btn btn-primary" onClick={() => logoutUser()}>logout</button>
+          <button type="button" className="btn-logout btn btn-primary" onClick={() => history.push('/Login')}>Login</button>
         </div>
       </div>
       <div className="main-wrapper container">
@@ -107,7 +95,6 @@ function LandingPage() {
               </div>
             )}
           </div>
-          <WritePost setUpdated={setUpdated}/>
         </div>
       </div>
 
@@ -115,4 +102,4 @@ function LandingPage() {
   );
 }
 
-export default LandingPage;
+export default withRouter(LandingPage);

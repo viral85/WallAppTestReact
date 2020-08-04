@@ -106,12 +106,11 @@ export async function createNewPost({data, token}) {
 }
 
 // get all wall posts
-export async function getAllLatestWallPosts({ token }) {
+export async function getAllLatestWallPosts() {
   const response = await fetch(`${baseUrl}/api/wall/walls/list/`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
     },
   });
   return await response.json();
@@ -124,6 +123,18 @@ export async function addCommentOnPost({data, token}) {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(data)
+  });
+  return await response.json();
+}
+
+// forgot password
+export async function forgotPasswordQuery(data) {
+  const response = await fetch(`${baseUrl}/api/password_reset/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)
   });

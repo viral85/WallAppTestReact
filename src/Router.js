@@ -5,6 +5,8 @@ import SignUpPage from './screens/signupPage/SignUpPage'
 import ResetPasswordPage from './screens/resetPassword/ResetPasswordPage';
 import ForgotPassword from './screens/loginPage/components/ForgotPassword';
 
+import GuestLandingPage from './screens/landingPage/LandingPage';
+
 import {
   Switch,
   Route,
@@ -48,6 +50,9 @@ function AppRouter() {
         </Route>
         <Route path="/Reset-password">
           <ResetPasswordPage />
+        </Route>
+        <Route path="/User/Guest">
+          <GuestLandingPage />
         </Route>
         <ProtectedRoute exact path="/User/Dashboard" component={LandingPage} />
       </Switch>
