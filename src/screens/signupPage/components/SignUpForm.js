@@ -1,23 +1,50 @@
 import React, { useEffect } from 'react';
 
-import {
-	Redirect,
-	withRouter,
-	useHistory,
-	useLocation,
+import {	useHistory,
 	Link
 } from "react-router-dom";
 import { Formik } from 'formik';
 import { SignupSchema } from '../../../validation/SignupSchema';
-import { signInQuery, getCurrentUser } from '../../../api/Queries';
+import { signUpQuery } from '../../../api/Queries';
 
 import LoadingSpinner from '../../../sharedComponents/LoadingSpinner';
 
-import { UserContext } from "../../../contexts/UserContext";
-
 function SignUpForm(props) {
+
+  let history = useHistory();
+  
 	const [errorMessage, setErrorMessage] = React.useState("");
-	const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  useEffect(() => {
+    if(errorMessage){
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 2000)
+    }
+  }, [errorMessage])
+  
+  const registerHandler = async (creds, resetForm) => {
+    setIsLoading(true);
+		try {
+			const data = await signUpQuery(creds);
+			if(data && data.data && (Object.keys(data.data).length > 0 || data.status === 1)){
+				history.push('/Login');
+			} 
+
+			if(data && data.message &&(Object.keys(data.data).length === 0 || data.status === 0)) {
+        setErrorMessage('The fields may not be a blank');
+        resetForm();
+			}
+			setIsLoading(false);
+		} catch (e) {
+			console.log(e);
+      setIsLoading(false);
+      resetForm();
+			setErrorMessage('a network error occured');
+		}
+  };
+  
 	return (
 			<div className="common-page-wrapper">
 					<div className="login-form shadow">
@@ -27,53 +54,126 @@ function SignUpForm(props) {
 											<h2>Register</h2>
 									</div>
 									<div className="card-text">
-											{/* <div className="alert alert-danger alert-dismissible fade show" role="alert">Incorrect username or password.</div>  */}
-											<form>
-													{/* to error: add className "has-danger"  */}
-													<div className="form-group">
-															<label>First name</label>
-															<input 
-																type="text" 
-																className="form-control form-control-sm" />
+                    <Formik
+                      initialValues={{
+                        first_name: "",
+                        last_name: "",
+                        username: "",
+                        email: "",
+                        password: "",
+                        phone_number: ""
+                      }}
+                      validationSchema={SignupSchema}
+                      onSubmit={(values, { resetForm }) => {
+                        registerHandler(values, resetForm);
+                      }}
+                    >
+                    {({
+											values,
+											errors,
+											touched,
+											handleChange,
+											handleBlur,
+											handleSubmit,
+											isSubmitting,
+										}) => (
+                      <form onSubmit={handleSubmit}>
+                          <div className={`form-group ${errors.first_name && touched.first_name ? 'has-danger' : ''}`}>
+                            <label htmlFor="inputFirstName">First name</label>
+                            <input 
+                              type="text" 
+                              name="first_name"
+                              placeholder="First name"
+                              onChange={handleChange}
+															onBlur={handleBlur}
+                              value={values.first_name}
+                              id="inputFirstName"
+															className="form-control form-control-sm" />
+                            <div className="has-error">{errors.first_name && touched.first_name && errors.first_name}</div>
 													</div>
-													<div className="form-group">
-															<label>Last name</label>
-															<input 
-																type="text" 
-																className="form-control form-control-sm" 
-															/>
+                          <div className={`form-group ${errors.last_name && touched.last_name ? 'has-danger' : ''}`}>
+                            <label htmlFor="inputLastName">Last name</label>
+                            <input 
+                              type="text" 
+                              name="last_name"
+                              placeholder="Last name"
+                              onChange={handleChange}
+															onBlur={handleBlur}
+                              value={values.last_name}
+                              id="inputLastName"
+															className="form-control form-control-sm" />
+                            <div className="has-error">{errors.last_name && touched.last_name && errors.last_name}</div>
 													</div>
-													<div className="form-group">
-															<label htmlFor="exampleInputEmail1">Email address</label>
-															<input 
-																type="email" 
-																className="form-control form-control-sm" 
-																id="exampleInputEmail1" 
-																aria-describedby="emailHelp" 
-															/>
+                          <div className={`form-group ${errors.email && touched.email ? 'has-danger' : ''}`}>
+                            <label htmlFor="inputEmailAddress">Email address</label>
+                            <input 
+                              type="text" 
+                              name="email"
+                              placeholder="Email address"
+                              onChange={handleChange}
+															onBlur={handleBlur}
+                              value={values.email}
+                              id="inputEmailAddress"
+                              aria-describedby="emailHelp" 
+															className="form-control form-control-sm" />
+                            <div className="has-error">{errors.email && touched.email && errors.email}</div>
 													</div>
-													<div className="form-group">
-															<label htmlFor="exampleInputPassword1">Password</label>
-															<input 
-																type="password" 
-																className="form-control form-control-sm" 
-																id="exampleInputPassword1" 
-															/>
+                          <div className={`form-group ${errors.username && touched.username ? 'has-danger' : ''}`}>
+														<label htmlFor="inputUsername">Username</label>
+														<input 
+															type="text"
+															name="username"
+															placeholder="Username"
+															onChange={handleChange}
+															onBlur={handleBlur}
+															value={values.username}
+															className="form-control form-control-sm" 
+															id="inputUsername"
+														/>
+														<div className="has-error">{errors.username && touched.username && errors.username}</div>
 													</div>
-													<div className="form-group">
-															<label htmlFor="phonenumber">Phone Number</label>
-															<input 
-																type="text" 
-																className="form-control form-control-sm" 
-																id="phonenumber" 
-															/>
+                          <div className={`form-group ${errors.password && touched.password ? 'has-danger' : ''}`}>
+														<label for="inputPassword">Password</label>
+														<input 
+															type="password"
+															name="password"
+															placeholder="Password"
+															onChange={handleChange}
+															onBlur={handleBlur}
+															value={values.password}
+															className="form-control form-control-sm" 
+															id="inputPassword"
+														/>
+														<div className="has-error">{errors.password && touched.password && errors.password}</div>
 													</div>
-													{/* +XX-XXXX-XXXX */}
-													<button type="submit" className="btn btn-primary btn-block">Sign up</button>
-													<div className="already-account sign-up">
-															<p>Allready have an account? <Link to="/Login">Login</Link></p>   
+                          <div className={`form-group ${errors.phone_number && touched.phone_number ? 'has-danger' : ''}`}>
+														<label for="inputPhoneNumber">Phone number</label>
+														<input 
+															type="text"
+															name="phone_number"
+															placeholder="Phone number (+XX-XXXX-XXXX)"
+															onChange={handleChange}
+															onBlur={handleBlur}
+															value={values.phone_number}
+															className="form-control form-control-sm" 
+															id="inputPhoneNumber"
+														/>
+														<div className="has-error">{errors.phone_number && touched.phone_number && errors.phone_number}</div>
 													</div>
-											</form>
+                          {isLoading ? (
+														<div className="login-loading-wrapper">
+															<LoadingSpinner />
+														</div>
+													) : (
+														<button type="submit" className="btn btn-primary btn-block">Sign up</button>
+													)}
+                      </form>
+                    )}
+                    </Formik>
+                    {errorMessage && <div style={{ marginTop: 10 }} className="alert alert-danger alert-dismissible fade show" role="alert">{errorMessage}</div>}
+                    <div className="already-account sign-up">
+                        <p>Already have an account? <Link to="/Login">Login</Link></p>   
+                    </div>
 									</div>
 							</div>
 					</div>

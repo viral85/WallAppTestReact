@@ -36,7 +36,7 @@ export function fetchData({setFetching, setFetchingErr, setData, setErrMsg, quer
 
 //creates new user
 export async function signUpQuery(data) {
-  const response = await fetch(`${baseUrl}/api/v1/auth/signup`, {
+  const response = await fetch(`${baseUrl}/api/users/list/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -60,7 +60,7 @@ export async function signInQuery(data) {
 
 // get existing user detail
 export async function getCurrentUser({ id, token }) {
-  const response = await fetch(`${baseUrl}/api/users/details/${id}`, {
+  const response = await fetch(`${baseUrl}/api/users/details/${id}/`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

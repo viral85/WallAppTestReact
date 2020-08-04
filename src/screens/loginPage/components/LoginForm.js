@@ -38,8 +38,16 @@ function LoginForm(props) {
 
 	let token = getTokenFromLocalStorage();
 	const nextPage = getNextPageFromLocalStorage();
+
+	useEffect(() => {
+    if(errorMessage){
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 2000)
+    }
+  }, [errorMessage])
 	
-	const loginHandler = async (creds) => {
+	const loginHandler = async (creds, resetForm) => {
     setIsLoading(true);
 		try {
 			const data = await signInQuery(creds);
@@ -54,12 +62,14 @@ function LoginForm(props) {
 
 			if(data && data.detail) {
 				setErrorMessage('Credentials are invalid!');
+				resetForm();
 			}
 			token = data.access;
 			setIsLoading(false);
 		} catch (e) {
 			console.log(e);
 			setIsLoading(false);
+			resetForm();
 			setErrorMessage('a network error occured');
 		}
 	};
@@ -89,8 +99,8 @@ function LoginForm(props) {
 											password: ''
 										}}
 										validationSchema={LogInSchema}
-										onSubmit={(values, actions) => {
-												loginHandler(values);
+										onSubmit={(values, { resetForm }) => {
+												loginHandler(values, resetForm);
 										}}
 									>
 										{({
