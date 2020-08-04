@@ -122,6 +122,42 @@ textarea:focus {
     font-size: small;
 }
 
+.loader-overlay {
+    position:absolute;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+    height:400px;
+    z-index:2
+}
+
+.loader-overlay .loader-main-container {
+    background:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:12px;
+    border: 1px solid grey;
+    border-radius:5px;
+}
+
+.loader-main-container .loading-container {
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.loader-main-container .loading-container .loading-title {
+    margin-right:20px;
+    font-size:18px;
+}
+
+.loader-main-container .loading-container .loading-error {
+    font-size:18px;
+    color:red;
+}
 /* Common CSS End */
 .main-wrapper {
     margin-top: 50px;
@@ -168,6 +204,9 @@ textarea:focus {
     box-shadow: 1px 1px 5px #bfbfbf;
     background-color: #fff;
     border-radius: 5px;
+    position: fixed;
+    width: 100%;
+    max-width: 510px;
 }
 
 .user-section {
@@ -242,7 +281,7 @@ textarea:focus {
 .post-btn-wrapper ul li {
     display: flex;
     flex-wrap: wrap;
-    width: 49%;
+    width: 100%;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
@@ -341,9 +380,30 @@ textarea:focus {
     resize: none;
     border:0;
 }
+.comments {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
+    line-height: normal;
+    margin-bottom: 10px;
+}
+.comments:last-child{
+    margin-bottom: 0;
+}
+.comment-wrapper {
+    padding: 15px;
+}
+.comment-block {
+    padding: 15px;
+    border-top: 1px solid #ebebeb;
+}
 
-
-
+.date {
+    margin-top: 10px;
+}
+.date p {
+    margin: 0;
+}
 /* responsive */
 
 @media (min-width: 768px) {

@@ -91,3 +91,41 @@ export async function isUserLoggedIn({ id, token }) {
   }
   return user.data;
 }
+
+//creates new post for logged user
+export async function createNewPost({data, token}) {
+  const response = await fetch(`${baseUrl}/api/wall/walls/list/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(data)
+  });
+  return await response.json();
+}
+
+// get all wall posts
+export async function getAllLatestWallPosts({ token }) {
+  const response = await fetch(`${baseUrl}/api/wall/walls/list/`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  });
+  return await response.json();
+}
+
+// creates/adds new comment on post
+export async function addCommentOnPost({data, token}) {
+  const response = await fetch(`${baseUrl}/api/wall/comment/list/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(data)
+  });
+  return await response.json();
+}

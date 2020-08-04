@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useLayoutEffect } from 'react'
-import LandingPage from './screens/landingPage/LandingPage'
+import LandingPage from './protectedScreens/landingPage/LandingPage'
 import LoginPage from './screens/loginPage/LoginPage'
 import SignUpPage from './screens/signupPage/SignUpPage'
 import ResetPasswordPage from './screens/resetPassword/ResetPasswordPage';

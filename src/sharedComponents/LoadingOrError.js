@@ -1,50 +1,28 @@
 import React from 'react';
-import styled from 'styled-components'
 import { Dots } from 'react-activity';
 
 function LoadingOrError({loading, loadingMsg, err, errMsg, style}) {
   if(loading){
     return(
-      <Container>
-        <Title style={style}>
+      <div className="loading-container">
+        <div className="loading-title" style={style}>
           {loadingMsg}
-        </Title>
+        </div>
         <Dots />
-      </Container>
+      </div>
     );
-  }else if (err) {
+  } else if (err) {
     return(
-      <Container>
-        <Error>
+      <div className="loading-container">
+        <div className="loading-error">
           Error: {errMsg}
-        </Error>
-      </Container>
+        </div>
+      </div>
     );
-  }else{
+   } else {
     return null
   }
 }
 
 export default LoadingOrError;
 
-const Container = styled.div`
-height:100%;
-display:flex;
-justify-content:center;
-align-items:center;
-font-family: 'Colfax';
-`
-const Title = styled.div`
-margin-right:20px;
-font-size:18px;
-@media (max-width: 768px) {
-  font-size: .9em;
-}
-`
-const Error = styled.div`
-font-size:18px;
-color:red;
-@media (max-width: 768px) {
-  font-size: .9em;
-}
-`
