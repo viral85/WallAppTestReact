@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { Dots } from 'react-activity';
 
 import { Formik } from 'formik';
 import { LogInSchema } from '../../../validation/LogInSchema';
@@ -61,7 +62,7 @@ function LoginForm(props) {
             }
 
             if (data && data.detail) {
-                setErrorMessage('Credentials are invalid!');
+                setErrorMessage("The username and password that you entered is incorrect or the account doesn't exist");
                 resetForm();
             }
             token = data.access;
@@ -141,13 +142,13 @@ function LoginForm(props) {
                                             />
                                             <div className="has-error">{errors.password && touched.password && errors.password}</div>
                                         </div>
-                                        {isLoading ? (
-                                            <div className="login-loading-wrapper">
-                                                <LoadingSpinner />
-                                            </div>
-                                        ) : (
-                                                <button type="submit" className="btn btn-primary btn-block">Sign in</button>
-                                            )}
+                                        <button type="submit" style={{  marginTop: 30, alignItems: "center", display: "flex", justifyContent: 'center' }} disabled={isSubmitting} className="btn btn-primary btn-block">
+                                            <span style={{marginRight:'20px'}}>Sign in</span>
+                                            <Dots
+                                                color={'#000'}
+                                                animating={isSubmitting}
+                                            />
+                                        </button>
                                     </form>
                                 )}
                         </Formik>

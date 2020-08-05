@@ -1,6 +1,8 @@
 import React from 'react';
 import ResetPasswordForm from './components/ResetPasswordForm'
-import { connect } from 'react-redux'
+import {
+  withRouter
+} from "react-router-dom";
 
 function ResetPasswordPage(props) {
   return (
@@ -10,12 +12,4 @@ function ResetPasswordPage(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    auth: state.auth
-  }
-}
-
-export default connect(
-  mapStateToProps,
-)(ResetPasswordPage)
+export default withRouter(ResetPasswordPage)

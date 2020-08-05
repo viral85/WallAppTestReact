@@ -4,6 +4,7 @@ import LoginPage from './screens/loginPage/LoginPage'
 import SignUpPage from './screens/signupPage/SignUpPage'
 import ResetPasswordPage from './screens/resetPassword/ResetPasswordPage';
 import ForgotPassword from './screens/loginPage/components/ForgotPassword';
+import NoContentPage from './screens/noContentPage/NoContentPage';
 
 import GuestLandingPage from './screens/landingPage/LandingPage';
 
@@ -48,13 +49,16 @@ function AppRouter() {
         <Route path="/Signup">
           <SignUpPage />
         </Route>
-        <Route path="/Reset-password">
+        <Route path="/Generate-password">
           <ResetPasswordPage />
         </Route>
         <Route path="/User/Guest">
           <GuestLandingPage />
         </Route>
         <ProtectedRoute exact path="/User/Dashboard" component={LandingPage} />
+        <Route path={`/`}>
+          <NoContentPage />
+        </Route>
       </Switch>
     </>
   )

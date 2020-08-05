@@ -32,7 +32,7 @@ class UserContextProvider extends Component {
     return (
       <UserContext.Provider value={{ ...this.state, login: this.login, logout: this.logout }}>
         {this.props.children}
-        {this.state.isLoggedIn ? null : <Redirect to="/Login" />}
+        {/* {this.state.isLoggedIn ? null : <Redirect to="/Login" />} */}
       </UserContext.Provider>
     );
   }

@@ -28,14 +28,12 @@ function ForgotPassword(props) {
 		setIsLoading(true);
 		try {
 				const data = await forgotPasswordQuery(creds);
-				if (data && data.data && (Object.keys(data.data).length > 0 || data.status === 1)) {
+				if (data && data.status === 'OK') {
 						history.push('/Login');
-				}
-
-				if (data && data.message && (Object.keys(data.data).length === 0 || data.status === 0)) {
-						setErrorMessage('The fields may not be a blank');
-						resetForm();
-				}
+				} else {
+          setErrorMessage('There is no active user associated with this e-mail address or the password can not be changed');
+          resetForm();
+        }
 				setIsLoading(false);
 		} catch (e) {
 				console.log(e);
@@ -86,7 +84,7 @@ function ForgotPassword(props) {
 																		className="form-control form-control-sm" />
 																<div className="has-error">{errors.email && touched.email && errors.email}</div>
 														</div>
-														<button type="submit" style={{ alignItems: "center", display: "flex" }} disabled={isSubmitting} className="form-control form-control-sm">
+														<button type="submit" style={{ marginTop: 30, alignItems: "center", display: "flex", justifyContent: 'center' }} disabled={isSubmitting} className="btn btn-primary btn-block">
 															<span style={{marginRight:'20px'}}>Send password reset email</span>
 															<Dots
 																color={'#000'}

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Dots } from 'react-activity';
 
 import {
     useHistory,
@@ -161,13 +162,13 @@ function SignUpForm(props) {
                                             />
                                             <div className="has-error">{errors.phone_number && touched.phone_number && errors.phone_number}</div>
                                         </div>
-                                        {isLoading ? (
-                                            <div className="login-loading-wrapper">
-                                                <LoadingSpinner />
-                                            </div>
-                                        ) : (
-                                                <button type="submit" className="btn btn-primary btn-block">Sign up</button>
-                                            )}
+                                        <button type="submit" style={{  marginTop: 30, alignItems: "center", display: "flex", justifyContent: 'center' }} disabled={isSubmitting} className="btn btn-primary btn-block">
+                                          <span style={{marginRight:'20px'}}>Sign up</span>
+                                          <Dots
+                                              color={'#000'}
+                                              animating={isSubmitting}
+                                            />
+                                        </button>
                                     </form>
                                 )}
                         </Formik>
@@ -179,7 +180,7 @@ function SignUpForm(props) {
                             <p>or</p>
                         </div>
                         <div className="guest-login">
-                            Login as <Link to="/Signup">Guest</Link>
+                            Login as <Link to="/User/Guest">Guest</Link>
                         </div>
                     </div>
                 </div>
